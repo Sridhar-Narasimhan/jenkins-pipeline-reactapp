@@ -1,11 +1,81 @@
+// Execute commands and retrieve the output
+def executeCommand(String command) {
+    if (isUnix()) {
+        sh(script: 'set +x && ' + command + ' > tempFile', returnStdout: true);
+    }
+    else {
+        bat(script: command + ' > tempFile', returnStdout: true);
+    }
+
+    return readFile('tempFile').trim();
+}
+
+
 pipeline{
-    agent any
+    agent any 
     stages{
-        stage("Checkout"){
+        stage("Checkout")
+        {
             steps{
-            echo "Checkout Successful"
+                // Can use pipeline syntax to get this details 
+                git branch: 'main', credentialsId: 'Github', url: 'https://github.com/Sridhar-Narasimhan/jenkins-pipeline-reactapp'
+                echo "Checkout Successful"
             }
         }
-
+        stage("Install")
+        {
+            steps{
+                script{
+                    def installStatus = executeCommand('npm install');
+                    println(installStatus);
+                }
+            }
+        }
+        
+        stage("Build")
+        {
+            steps{
+                script{
+                    def buildReport = executeCommand('npm run build');
+                    println(buildReport);
+    
+                }
+            }
+        }
+        
+        stage("Artifact"){
+            steps{
+                script{
+                    //Artifact build to nexus repository manager 
+                    nodejs('Node JS') {
+                        def REPOSITORY = 'registry=http://nexus.ofs.com/repository/test/'
+                        def USERNAME = 'nexus.ofs.com/repository/test/:username=ofs'
+                        def PASSWORD = 'nexus.ofs.com/repository/test/:_password=XYZ=*'
+                        def EMAIL = 'nexus.ofs.com/repository/test/:email=pipeline@ofs.com'
+                        def ALWAYS_AUTH = 'nexus.ofs.com/repository/test/:always-auth=true'
+                        echo REPOSITORY
+                        def registry = '' + REPOSITORY + '\n' + USERNAME + '\n' + PASSWORD + '\n' + EMAIL + '\n' + ALWAYS_AUTH + ''
+                        writeFile(file: '.npmrc', text: registry)
+                        def data = readFile(file: '.npmrc')
+                        println(data)
+                        def artifactPublishReport = executeCommand('npm publish --access=public');
+                        println(artifactPublishReport);
+                    }
+                    //Jenkins artiffact which will be available and after success status you can check 
+                    def artifactList = 'build/'
+                    archiveArtifacts artifacts: artifactList, excludes: null;
+                }
+            }
+        }
+        stage("Deploy"){
+            steps{
+                script{
+                    //Handled deploy through github pages and check deploy script in package json file     
+                    executeCommand('git remote set-url origin https://sridhar-narasimhan:9cabf3f2e9b77fc5fdfba9686dd5a0328801170b@github.com/sridhar-narasimhan/jenkins-pipeline-reactapp')
+                    def buildDeployReport = executeCommand('npm run deploy')
+                    println(buildDeployReport);
+                }
+            }
+        }
     }
 }
