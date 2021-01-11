@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/jenkins-pipeline-reactapp/static/css/main.7d180cbf.chunk.css",
+    "main.js": "/jenkins-pipeline-reactapp/static/js/main.4297221d.chunk.js",
+    "main.js.map": "/jenkins-pipeline-reactapp/static/js/main.4297221d.chunk.js.map",
+    "runtime-main.js": "/jenkins-pipeline-reactapp/static/js/runtime-main.75e11c77.js",
+    "runtime-main.js.map": "/jenkins-pipeline-reactapp/static/js/runtime-main.75e11c77.js.map",
+    "static/js/2.a40dacdf.chunk.js": "/jenkins-pipeline-reactapp/static/js/2.a40dacdf.chunk.js",
+    "static/js/2.a40dacdf.chunk.js.map": "/jenkins-pipeline-reactapp/static/js/2.a40dacdf.chunk.js.map",
+    "static/js/3.d0495304.chunk.js": "/jenkins-pipeline-reactapp/static/js/3.d0495304.chunk.js",
+    "static/js/3.d0495304.chunk.js.map": "/jenkins-pipeline-reactapp/static/js/3.d0495304.chunk.js.map",
+    "index.html": "/jenkins-pipeline-reactapp/index.html",
+    "static/css/main.7d180cbf.chunk.css.map": "/jenkins-pipeline-reactapp/static/css/main.7d180cbf.chunk.css.map",
+    "static/js/2.a40dacdf.chunk.js.LICENSE.txt": "/jenkins-pipeline-reactapp/static/js/2.a40dacdf.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/jenkins-pipeline-reactapp/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.75e11c77.js",
+    "static/js/2.a40dacdf.chunk.js",
+    "static/css/main.7d180cbf.chunk.css",
+    "static/js/main.4297221d.chunk.js"
+  ]
+}
